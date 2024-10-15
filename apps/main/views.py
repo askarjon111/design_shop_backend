@@ -14,7 +14,10 @@ class CustomerRegisterView(CreateAPIView):
 @api_view(['GET'])
 def get_customer_view(request):
     telegram_id = request.GET.get('telegram_id')
+    print(telegram_id)
     customer = Customer.objects.filter(telegram_id=telegram_id)
     if customer:
         customer = CustomerSerializer(customer.last()).data
-    return Response({'customer': customer}, status=200 if customer != None else 404)
+        return Response({'customer': customer})
+    else:
+        return Response({}, 404)
